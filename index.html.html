@@ -1,0 +1,605 @@
+from textwrap import dedent
+
+html = dedent("""
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fabulous Finds | Luxury Unisex Boutique in Monrovia</title>
+
+<meta name="description" content="Luxury unisex boutique in Monrovia, Liberia offering premium fashion, footwear, accessories, and designer-inspired collections.">
+<meta name="keywords" content="Monrovia boutique, Liberia fashion, luxury clothing Liberia, men's fashion, women's fashion">
+<meta name="author" content="Fabulous Finds">
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+ --gold:#d4af37;
+ --black:#0b0b0b;
+ --dark:#111;
+ --cream:#f7f3ec;
+ --text:#ddd;
+}
+
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+}
+
+html{
+ scroll-behavior:smooth;
+}
+
+body{
+ background:var(--black);
+ color:white;
+ font-family:'Raleway',sans-serif;
+ overflow-x:hidden;
+ transition:0.4s ease;
+}
+
+body.light{
+ background:#faf7f2;
+ color:#222;
+}
+
+#loader{
+ position:fixed;
+ inset:0;
+ background:#000;
+ z-index:99999;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ flex-direction:column;
+ transition:1s ease;
+}
+
+.loader-logo{
+ font-family:'Cinzel',serif;
+ letter-spacing:0.4em;
+ color:var(--gold);
+ font-size:2rem;
+ animation:pulse 1.6s infinite;
+}
+
+@keyframes pulse{
+ 0%{opacity:0.3; transform:scale(.95);}
+ 50%{opacity:1; transform:scale(1);}
+ 100%{opacity:0.3; transform:scale(.95);}
+}
+
+.loaded #loader{
+ opacity:0;
+ visibility:hidden;
+}
+
+nav{
+ position:fixed;
+ top:0;
+ left:0;
+ right:0;
+ padding:20px 60px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ background:rgba(0,0,0,.55);
+ backdrop-filter:blur(20px);
+ z-index:1000;
+ border-bottom:1px solid rgba(212,175,55,.15);
+}
+
+.logo{
+ font-family:'Cinzel',serif;
+ color:var(--gold);
+ font-size:1.1rem;
+ letter-spacing:.3em;
+ text-decoration:none;
+}
+
+.nav-links{
+ display:flex;
+ gap:30px;
+ list-style:none;
+}
+
+.nav-links a{
+ text-decoration:none;
+ color:#fff;
+ font-size:.8rem;
+ letter-spacing:.15em;
+ text-transform:uppercase;
+}
+
+.actions{
+ display:flex;
+ gap:15px;
+ align-items:center;
+}
+
+.dark-toggle{
+ background:none;
+ border:1px solid rgba(255,255,255,.2);
+ color:white;
+ padding:10px 14px;
+ cursor:pointer;
+}
+
+.call-btn{
+ background:var(--gold);
+ color:black;
+ padding:12px 22px;
+ text-decoration:none;
+ font-weight:600;
+}
+
+.hero{
+ min-height:100vh;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ align-items:center;
+ padding:120px 80px;
+ gap:60px;
+}
+
+.hero h1{
+ font-family:'Cormorant Garamond',serif;
+ font-size:6rem;
+ line-height:1;
+ margin-bottom:25px;
+ text-shadow:0 0 40px rgba(212,175,55,.2);
+}
+
+.hero h1 span{
+ color:var(--gold);
+ font-style:italic;
+}
+
+.hero p{
+ color:#bbb;
+ line-height:1.9;
+ margin-bottom:40px;
+ max-width:520px;
+}
+
+.hero-buttons{
+ display:flex;
+ gap:20px;
+}
+
+.primary-btn{
+ background:var(--gold);
+ color:black;
+ text-decoration:none;
+ padding:16px 34px;
+ font-weight:600;
+ letter-spacing:.1em;
+ position:relative;
+ overflow:hidden;
+}
+
+.primary-btn::before{
+ content:'';
+ position:absolute;
+ top:0;
+ left:-100%;
+ width:100%;
+ height:100%;
+ background:linear-gradient(120deg,transparent,rgba(255,255,255,.4),transparent);
+ transition:.7s;
+}
+
+.primary-btn:hover::before{
+ left:100%;
+}
+
+.secondary-btn{
+ border:1px solid rgba(255,255,255,.3);
+ color:white;
+ text-decoration:none;
+ padding:16px 34px;
+}
+
+.hero-image{
+ position:relative;
+}
+
+.hero-image img{
+ width:100%;
+ height:700px;
+ object-fit:cover;
+ border-radius:10px;
+}
+
+.hero-card{
+ position:absolute;
+ bottom:30px;
+ left:-30px;
+ background:rgba(0,0,0,.75);
+ backdrop-filter:blur(10px);
+ padding:25px;
+ border:1px solid rgba(212,175,55,.2);
+}
+
+section{
+ padding:120px 80px;
+}
+
+.section-title{
+ font-family:'Cormorant Garamond',serif;
+ font-size:4rem;
+ margin-bottom:20px;
+}
+
+.section-title span{
+ color:var(--gold);
+ font-style:italic;
+}
+
+.products{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:30px;
+ margin-top:60px;
+}
+
+.product{
+ background:#111;
+ overflow:hidden;
+ transition:.4s ease;
+}
+
+.product:hover{
+ transform:translateY(-10px);
+}
+
+.product img{
+ width:100%;
+ height:420px;
+ object-fit:cover;
+ transition:.5s ease;
+}
+
+.product:hover img{
+ transform:scale(1.05);
+}
+
+.product-content{
+ padding:24px;
+}
+
+.product-category{
+ color:var(--gold);
+ font-size:.75rem;
+ text-transform:uppercase;
+ letter-spacing:.15em;
+ margin-bottom:10px;
+}
+
+.product-title{
+ font-family:'Cormorant Garamond',serif;
+ font-size:2rem;
+ margin-bottom:10px;
+}
+
+.product-price{
+ font-size:1.2rem;
+ color:var(--gold);
+ margin-bottom:20px;
+}
+
+.instagram-grid{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:15px;
+ margin-top:50px;
+}
+
+.instagram-grid img{
+ width:100%;
+ aspect-ratio:1/1;
+ object-fit:cover;
+ transition:.4s ease;
+}
+
+.instagram-grid img:hover{
+ transform:scale(1.04);
+}
+
+.about{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:60px;
+ align-items:center;
+}
+
+.about img{
+ width:100%;
+ border-radius:10px;
+ height:600px;
+ object-fit:cover;
+}
+
+.about p{
+ line-height:2;
+ color:#bbb;
+}
+
+footer{
+ background:#050505;
+ padding:80px;
+ border-top:1px solid rgba(212,175,55,.15);
+}
+
+.footer-grid{
+ display:grid;
+ grid-template-columns:2fr 1fr 1fr;
+ gap:40px;
+}
+
+.footer-title{
+ color:var(--gold);
+ margin-bottom:20px;
+ font-family:'Cinzel',serif;
+}
+
+.footer-links{
+ list-style:none;
+}
+
+.footer-links li{
+ margin-bottom:12px;
+}
+
+.footer-links a{
+ color:#aaa;
+ text-decoration:none;
+}
+
+.footer-bottom{
+ margin-top:50px;
+ padding-top:30px;
+ border-top:1px solid rgba(255,255,255,.08);
+ color:#666;
+}
+
+body.light nav{
+ background:rgba(255,255,255,.7);
+}
+
+body.light .nav-links a,
+body.light .secondary-btn{
+ color:#222;
+}
+
+body.light .product{
+ background:white;
+ color:#222;
+}
+
+body.light footer{
+ background:#eee;
+}
+
+@media(max-width:900px){
+
+ nav{
+  padding:20px;
+ }
+
+ .nav-links{
+  display:none;
+ }
+
+ .hero{
+  grid-template-columns:1fr;
+  padding:120px 25px 80px;
+ }
+
+ .hero h1{
+  font-size:4rem;
+ }
+
+ .hero-image img{
+  height:500px;
+ }
+
+ section{
+  padding:80px 25px;
+ }
+
+ .products{
+  grid-template-columns:1fr;
+ }
+
+ .instagram-grid{
+  grid-template-columns:1fr 1fr;
+ }
+
+ .about{
+  grid-template-columns:1fr;
+ }
+
+ .footer-grid{
+  grid-template-columns:1fr;
+ }
+}
+</style>
+</head>
+
+<body>
+
+<div id="loader">
+ <div class="loader-logo">FABULOUS FINDS</div>
+</div>
+
+<nav>
+ <a href="#" class="logo">FABULOUS FINDS</a>
+
+ <ul class="nav-links">
+  <li><a href="#shop">Shop</a></li>
+  <li><a href="#about">About</a></li>
+  <li><a href="#instagram">Instagram</a></li>
+ </ul>
+
+ <div class="actions">
+  <button class="dark-toggle" id="themeBtn">☀️</button>
+  <a href="tel:+231880068136" class="call-btn">Call Us</a>
+ </div>
+</nav>
+
+<section class="hero">
+ <div>
+  <h1>Luxury.<br><span>Style.</span><br>Confidence.</h1>
+
+  <p>
+   Monrovia’s premium unisex boutique delivering elevated fashion,
+   designer-inspired collections, premium footwear, and luxury accessories.
+  </p>
+
+  <div class="hero-buttons">
+   <a href="#shop" class="primary-btn">Shop Collection</a>
+   <a href="https://wa.me/231880068136" class="secondary-btn">WhatsApp</a>
+  </div>
+ </div>
+
+ <div class="hero-image">
+  <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=1200&auto=format&fit=crop" alt="Luxury Fashion">
+  <div class="hero-card">
+   <h3 style="margin-bottom:10px;color:var(--gold)">Fabulous Finds</h3>
+   <p style="color:#ccc">Elwa Rehab, Monrovia Liberia</p>
+  </div>
+ </div>
+</section>
+
+<section id="shop">
+ <h2 class="section-title">Featured <span>Collection</span></h2>
+
+ <div class="products">
+
+  <div class="product">
+   <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop">
+   <div class="product-content">
+    <div class="product-category">Men's Sneakers</div>
+    <div class="product-title">Luxury Runner</div>
+    <div class="product-price">$120</div>
+    <a href="https://wa.me/231880068136" class="primary-btn">Order Now</a>
+   </div>
+  </div>
+
+  <div class="product">
+   <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1200&auto=format&fit=crop">
+   <div class="product-content">
+    <div class="product-category">Designer Wear</div>
+    <div class="product-title">Premium Street Tee</div>
+    <div class="product-price">$85</div>
+    <a href="https://wa.me/231880068136" class="primary-btn">Order Now</a>
+   </div>
+  </div>
+
+  <div class="product">
+   <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=1200&auto=format&fit=crop">
+   <div class="product-content">
+    <div class="product-category">Women's Fashion</div>
+    <div class="product-title">Luxury Outfit</div>
+    <div class="product-price">$150</div>
+    <a href="https://wa.me/231880068136" class="primary-btn">Order Now</a>
+   </div>
+  </div>
+
+ </div>
+</section>
+
+<section id="about">
+ <div class="about">
+  <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1200&auto=format&fit=crop">
+
+  <div>
+   <h2 class="section-title">About <span>Fabulous Finds</span></h2>
+
+   <p>
+    Fabulous Finds is a luxury unisex boutique in Monrovia built for people
+    who appreciate premium style, confidence, and modern fashion culture.
+    Every collection is hand-selected to deliver a high-end experience inspired
+    by global luxury fashion houses.
+   </p>
+  </div>
+ </div>
+</section>
+
+<section id="instagram">
+ <h2 class="section-title">Instagram <span>Feed</span></h2>
+
+ <div class="instagram-grid">
+  <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1200&auto=format&fit=crop">
+  <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop">
+  <img src="https://images.unsplash.com/photo-1495385794356-15371f348c31?q=80&w=1200&auto=format&fit=crop">
+  <img src="https://images.unsplash.com/photo-1506629905607-d405b7a5d47d?q=80&w=1200&auto=format&fit=crop">
+ </div>
+</section>
+
+<footer>
+ <div class="footer-grid">
+
+  <div>
+   <h3 class="footer-title">Fabulous Finds</h3>
+   <p style="color:#999; line-height:1.9;">
+    Monrovia’s luxury fashion boutique for premium unisex fashion and lifestyle.
+   </p>
+  </div>
+
+  <div>
+   <h3 class="footer-title">Navigation</h3>
+   <ul class="footer-links">
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#instagram">Instagram</a></li>
+   </ul>
+  </div>
+
+  <div>
+   <h3 class="footer-title">Contact</h3>
+   <ul class="footer-links">
+    <li><a href="tel:+231880068136">+231 88 006 8136</a></li>
+    <li><a href="https://wa.me/231880068136">WhatsApp</a></li>
+    <li><a href="#">Monrovia, Liberia</a></li>
+   </ul>
+  </div>
+
+ </div>
+
+ <div class="footer-bottom">
+  © 2026 Fabulous Finds — Luxury Fashion Boutique
+ </div>
+</footer>
+
+<script>
+window.addEventListener('load', ()=>{
+ document.body.classList.add('loaded');
+});
+
+const themeBtn = document.getElementById('themeBtn');
+
+themeBtn.addEventListener('click', ()=>{
+ document.body.classList.toggle('light');
+
+ if(document.body.classList.contains('light')){
+  themeBtn.innerHTML = '🌙';
+ } else {
+  themeBtn.innerHTML = '☀️';
+ }
+});
+</script>
+
+</body>
+</html>
+""")
+
+path = "/mnt/data/fabulous_finds_luxury_website.html"
+with open(path, "w", encoding="utf-8") as f:
+    f.write(html)
+
+print(f"Website saved to {path}")
